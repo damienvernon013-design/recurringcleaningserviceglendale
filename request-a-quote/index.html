@@ -33,6 +33,7 @@
     <a href="/pricing/">Pricing</a>
     <a href="/our-process/">Our Process</a>
     <a href="/faq/">FAQ</a>
+    <a href="/blog/">Blog</a>
     <a href="/request-a-quote/"class="active">Get a Quote</a>
   </div>
 </nav><script type="application/ld+json">
@@ -63,47 +64,15 @@
       <div>
         <div class="quote-form-panel">
   <h2>Get a Written Quote</h2>
-  <div class="form-group">
-    <label for="name">Your Name</label>
-    <input type="text" id="name" name="name" placeholder="Jane Smith">
-  </div>
-  <div class="form-group">
-    <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" name="phone" placeholder="(602) 555-0100">
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="jane@yourcompany.com">
-  </div>
-  <div class="form-group">
-    <label for="zip">ZIP Code</label>
-    <input type="text" id="zip" name="zip" inputmode="numeric" maxlength="5" placeholder="85301">
-  </div>
-  <div class="form-group">
-    <label for="sqft">Approximate Square Footage</label>
-    <select id="sqft" name="sqft">
-      <option value="">Select range...</option>
-      <option>Under 2,000 sq ft</option>
-      <option>2,000–5,000 sq ft</option>
-      <option>5,000–15,000 sq ft</option>
-      <option>15,000–40,000 sq ft</option>
-      <option>Over 40,000 sq ft</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="freq">Cleaning Frequency</label>
-    <select id="freq" name="freq">
-      <option value="">Select...</option>
-      <option>Nightly (5 nights/week)</option>
-      <option>Nightly (3 nights/week)</option>
-      <option>Weekly</option>
-      <option>Bi-weekly</option>
-      <option>Monthly / Quarterly</option>
-      <option>Not sure yet</option>
-    </select>
-  </div>
-  <button class="btn-primary" type="button">Request My Written Quote</button>
-  <p class="form-note">We respond by the next business day. No obligation.</p>
+  <form data-quote-wizard novalidate>
+    <div data-wizard-progress class="wiz-progress"></div>
+    <div data-wizard-steps></div>
+    <p data-wizard-status class="form-status" role="status" aria-live="polite"></p>
+    <div data-wizard-nav class="wiz-nav">
+      <button type="button" data-wizard-back class="wiz-nav-back" hidden>Back</button>
+      <button type="button" data-wizard-next class="btn-primary">Next</button>
+    </div>
+  </form>
 </div>
         <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.75rem;">By submitting this form you agree to receive a callback from Glendale Recurring Cleaning. We do not share your information with any third party outside the quoted cleaning service.</p>
       </div>
@@ -163,5 +132,5 @@
     <span class="footer-years">22 years in the cleaning business.</span>
   </div>
 </footer>
-<script src="/lead-form.js" defer></script>
+<script src="/assets/js/quote-wizard.js" defer></script>
 </body></html>

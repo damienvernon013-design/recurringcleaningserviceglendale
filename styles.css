@@ -529,3 +529,177 @@ li { margin-bottom: 0.35rem; }
   .hero { padding: 2rem 1rem 1.75rem; }
   .section { padding: 2rem 1rem; }
 }
+
+/* Quote wizard */
+.form-row { margin-bottom: 0.85rem; }
+.form-row label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  transition: border-color 0.15s;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+}
+.wiz-progress { margin-bottom: 1.25rem; }
+.wiz-progress-bar {
+  display: block;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.wiz-progress-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+.wiz-progress-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+.wiz-fieldset { border: none; padding: 0; margin: 0; }
+.wiz-legend {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0.4rem;
+  padding: 0;
+}
+.wiz-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.wiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.wiz-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.wiz-option.is-selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.wiz-option-input { flex: 0 0 auto; }
+.wiz-option-label { font-size: 0.9rem; color: var(--text); }
+.wiz-slot {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.85rem;
+  margin-bottom: 0.85rem;
+  background: var(--bg);
+}
+.wiz-slot-title {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+}
+.wiz-slot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+@media (max-width: 480px) { .wiz-slot-grid { grid-template-columns: 1fr; } }
+.wiz-review-heading {
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+.wiz-review-card {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  background: var(--bg);
+}
+.wiz-review-card h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.wiz-review-list { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 0.75rem; }
+.wiz-review-list dt { font-size: 0.8rem; color: var(--text-muted); }
+.wiz-review-list dd { font-size: 0.9rem; color: var(--text); margin: 0; }
+.wiz-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+.wiz-terms input { flex: 0 0 auto; margin-top: 0.2rem; }
+.wiz-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+.wiz-nav .btn-primary { width: auto; flex: 1; }
+.wiz-nav-back {
+  display: inline-block;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.wiz-nav-back:disabled { opacity: 0.6; cursor: not-allowed; }
+.wiz-done { text-align: center; padding: 1rem 0; }
+.wiz-done h2 { color: var(--primary); margin-bottom: 0.6rem; }
+.wiz-done-list {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+  text-align: left;
+  font-size: 0.9rem;
+}
+.wiz-done-list li {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  background: var(--bg);
+}

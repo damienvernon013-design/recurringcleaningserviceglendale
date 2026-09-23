@@ -4,32 +4,48 @@ Status: **READY TO LAUNCH**
 
 ## What this is
 
-Static HTML microsite (43 pages, no build step) for a commercial recurring-cleaning
+Static HTML microsite (69 pages, no build step) for a commercial recurring-cleaning
 lead-gen brand serving Glendale, AZ and 8 surrounding West Valley towns. Deploys to
 Vercel, connected via the repo's Git integration (no CLI deploy needed).
 
 ## What changed in this pass
 
-1. **Contact form wired to the CRM-QM PushLead API**
-   - `api/submit-lead.js` — Vercel serverless function. Holds the CRM Bearer token
-     server-side (env var, never in client code) and proxies validated lead payloads to
-     `https://thequotemasters.com/crm_api/api.php?action=push_lead`.
-   - `lead-form.js` — client script wired into all 19 quote-form pages. Validates
-     required fields, captures UTM params from the landing URL, persists them in
-     `sessionStorage` so they survive page-to-page navigation, and submits to
-     `/api/submit-lead` on click. Shows inline success/error messaging.
-   - Added a required ZIP field to the quote form (the CRM API requires `zip`; the
-     original form didn't collect it).
-   - `styles.css` — added `.form-status` success/error styles and a disabled-button state.
+1. **Blog section (25 posts)**
+   - `blog/<slug>/index.html` × 25 + `blog/index.html` hub — static pages built to the
+     same header/nav/footer/JSON-LD shell as the rest of the site (`LocalBusiness` only,
+     no `Article`/`BlogPosting` schema, no byline/date).
+   - Rewritten for this site's brand from a generic commercial-cleaning content pack;
+     unverifiable named-study citations were softened to general claims, and industry
+     posts outside this site's quoted scope (restaurants/gyms/schools/daycares) were
+     reframed as general facility-hygiene guidance rather than direct service claims.
+   - Nav "Blog" link added sitewide (all 42 non-blog HTML pages); `sitemap.xml` updated
+     with all 25 post URLs + the hub URL (69 total sitemap entries, matching actual
+     page count).
 
-2. **UTM tracking**
-   - Handled at the lead level, not via a third-party analytics tag (none was
-     configured or supplied — no GA/GTM ID exists anywhere in the repo, so none was
-     fabricated). `lead-form.js` captures `utm_source/medium/campaign/term/content`
-     from the query string on first landing, and every submitted lead includes the UTM
-     source plus the originating page URL in the payload sent to the CRM.
+2. **CRM-integrated multi-step quote wizard (replaces the old single-step form)**
+   - `assets/js/quote-wizard.js` — full multi-step wizard (CRM questionnaire, appointment
+     slot booking, industry + contact details, review/confirm). Loaded only on
+     `/request-a-quote/`.
+   - `api/submit-lead.js` — rewritten to accept the wizard's CRM-shaped payload
+     (`customer`/`questions[]`/`appointments[]`/`industry`) instead of the old flat
+     name/phone/email/zip/sqft/freq body. Still proxies to the same CRM-QM `PushLead`
+     endpoint with the Bearer token read server-side from `CRM_API_TOKEN`.
+     `SITE_SOURCE_TAG` is set to `"Site: recurringcleaningserviceglendale.com"` and
+     prepended into every lead's `notes` field — the CRM token is shared across the
+     whole portfolio and has no per-site field, so this tag is the only way a lead is
+     attributable to this domain.
+   - All 35 other quote-form-panel pages (home, contact, pricing, resources,
+     service-areas, services) now use a short teaser form (`data-lead-teaser`, name +
+     phone + sqft) that GET-submits to `/request-a-quote/`, since the multi-step wizard
+     doesn't fit a narrow sidebar layout. The wizard's `prefillFromQuery()` reads the
+     query string and prefills step 1.
+   - `lead-form.js` trimmed to UTM-capture only (still loaded sitewide); the old
+     `data-lead-form` submit handler was removed since no page has that attribute
+     anymore.
+   - `styles.css` — appended the wizard's structural CSS block (`.wiz-*` classes) using
+     this site's existing color tokens.
 
-3. **Repo hygiene**
+3. **Repo hygiene (prior pass)**
    - Removed empty stray directories left over from a botched brace-expansion `mkdir`
      (e.g. `./{services,service-areas,resources}` existed literally on disk instead of
      expanding). No content was inside them.
@@ -45,20 +61,20 @@ from the CRM-QM API doc — it must NOT be committed to the repo. Without it,
 
 ## Known gaps / deliberately not built
 
-- **Industry code / question_id mapping**: the CRM-QM API doc's `PushLead` payload
-  supports an `industry` code and a `questions[]` array (question_id/answer_id pairs)
-  for questionnaire-style leads. No mapping table for this vertical (commercial
-  cleaning) or ID scheme was supplied anywhere in the provided docs, so these fields
-  were **omitted** from the payload rather than guessed — sending a wrong industry code
-  or answer ID would misfile every lead in the CRM. If QuoteMasters provides the
-  correct `industry` code and question/answer IDs for this vertical, add them to the
-  payload construction in `api/submit-lead.js`.
-- **Appointments (`appointments[]`)**: the form doesn't currently ask for a preferred
-  appointment slot, so this array is omitted. Add if a scheduling picker is added to
-  the form later.
-- **No automated tests** — per instruction, this pass shipped without a CRM test
-  harness. Manually verify a live submission once `CRM_API_TOKEN` is set in Vercel by
-  submitting the form on the deployed site and confirming the lead lands in the CRM.
+- **Industry code / question_id mapping — resolved this pass.** `assets/js/quote-wizard.js`
+  now uses the CRM's actual `get_lead_faq` questionnaire snapshot (question/answer IDs,
+  the 40+ item `INDUSTRIES` list, and `SCHEDULES` time slots) — see the reference
+  comment at the top of the `QUESTIONS`/`INDUSTRIES`/`SCHEDULES` arrays in that file.
+  Re-fetch `get_lead_faq` and update the file if the CRM questionnaire ever changes.
+- **Appointments (`appointments[]`) — resolved this pass.** The wizard's "Book your
+  walkthrough times" step collects 1–5 appointment slots depending on how many
+  companies the visitor wants to meet, validated against the CRM's date/weekday/lead-time
+  rules both client-side and server-side.
+- **No automated tests** — this pass shipped without a CRM test harness. Manually verify
+  a live submission once `CRM_API_TOKEN` is set in Vercel by clicking through the wizard
+  on a preview deploy — including a real appointment date/time — and confirming the lead
+  lands in the CRM. This was not done in this session for lack of a browser tool; do not
+  treat the wizard as launch-ready until someone does this.
 - **No analytics/GTM tag** — none was supplied; UTM capture happens at the lead-record
   level instead (see above).
 
@@ -69,6 +85,10 @@ from the CRM-QM API doc — it must NOT be committed to the repo. Without it,
   `process.env.CRM_API_TOKEN`).
 - All internal links (`href="/..."`) resolve to a real page.
 - No leftover placeholder text (`Lorem ipsum`, `{{`, `TBD`, `coming soon`, etc.)
-  anywhere in the 43 pages.
-- All 19 quote-form instances are wired identically and share the same
-  `lead-form.js`/`api/submit-lead.js` path.
+  anywhere in the pages.
+- `node --check` passes on both `assets/js/quote-wizard.js` and `api/submit-lead.js`.
+- All 35 teaser-form instances GET-submit to `/request-a-quote/` identically; the
+  wizard's six `data-wizard-*` scaffold hooks are present and unique on that page.
+- **Not yet done**: a real browser click-through of the wizard end to end on a preview
+  deploy, and a real test submission confirmed landing in the CRM. Do this before the
+  wizard goes live per the playbook's Phase 3.7.

@@ -33,6 +33,7 @@
     <a href="/pricing/">Pricing</a>
     <a href="/our-process/">Our Process</a>
     <a href="/faq/">FAQ</a>
+    <a href="/blog/">Blog</a>
     <a href="/request-a-quote/">Get a Quote</a>
   </div>
 </nav><script type="application/ld+json">
@@ -69,47 +70,29 @@
       </div>
       <div class="quote-form-panel">
   <h2>Get a Written Quote</h2>
-  <div class="form-group">
-    <label for="name">Your Name</label>
-    <input type="text" id="name" name="name" placeholder="Jane Smith">
-  </div>
-  <div class="form-group">
-    <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" name="phone" placeholder="(602) 555-0100">
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="jane@yourcompany.com">
-  </div>
-  <div class="form-group">
-    <label for="zip">ZIP Code</label>
-    <input type="text" id="zip" name="zip" inputmode="numeric" maxlength="5" placeholder="85301">
-  </div>
-  <div class="form-group">
-    <label for="sqft">Approximate Square Footage</label>
-    <select id="sqft" name="sqft">
-      <option value="">Select range...</option>
-      <option>Under 2,000 sq ft</option>
-      <option>2,000–5,000 sq ft</option>
-      <option>5,000–15,000 sq ft</option>
-      <option>15,000–40,000 sq ft</option>
-      <option>Over 40,000 sq ft</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="freq">Cleaning Frequency</label>
-    <select id="freq" name="freq">
-      <option value="">Select...</option>
-      <option>Nightly (5 nights/week)</option>
-      <option>Nightly (3 nights/week)</option>
-      <option>Weekly</option>
-      <option>Bi-weekly</option>
-      <option>Monthly / Quarterly</option>
-      <option>Not sure yet</option>
-    </select>
-  </div>
-  <button class="btn-primary" type="button">Request My Written Quote</button>
-  <p class="form-note">We respond by the next business day. No obligation.</p>
+  <form data-lead-teaser action="/request-a-quote/" method="get">
+    <div class="form-group">
+      <label for="teaser-name">Your Name</label>
+      <input type="text" id="teaser-name" name="name" placeholder="Jane Smith">
+    </div>
+    <div class="form-group">
+      <label for="teaser-phone">Phone Number</label>
+      <input type="tel" id="teaser-phone" name="phone" placeholder="(602) 555-0100">
+    </div>
+    <div class="form-group">
+      <label for="teaser-sqft">Approximate Square Footage</label>
+      <select id="teaser-sqft" name="sqft">
+        <option value="">Select range...</option>
+        <option>Under 2,000 sq ft</option>
+        <option>2,000–5,000 sq ft</option>
+        <option>5,000–15,000 sq ft</option>
+        <option>15,000–40,000 sq ft</option>
+        <option>Over 40,000 sq ft</option>
+      </select>
+    </div>
+    <button class="btn-primary" type="submit">Start My Written Quote</button>
+    <p class="form-note">Takes 60 seconds. We respond by the next business day.</p>
+  </form>
 </div>
     </div>
   </div>
